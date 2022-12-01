@@ -27,7 +27,7 @@ public interface TrabajadorService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Trabajador> findAll(Pageable pageable);
+    Page<TrabajadorDTO> findAll(Pageable pageable);
 
 
     /**

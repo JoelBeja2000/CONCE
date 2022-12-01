@@ -26,7 +26,29 @@ public class TrabajadorMapper {
     return trabajador;
     }
 
-    public TrabajadorDTO toDTO(Trabajador trabajador, Long numeroVentas) {
-        return null;
+    public TrabajadorDTO toDTO(Trabajador trabajador, int numeroVentas, double comision) {
+
+        TrabajadorDTO trabajadorDTO = new TrabajadorDTO();
+
+        trabajadorDTO.setId(trabajador.getId());
+
+        trabajadorDTO.setDni(trabajador.getDni());
+
+        trabajadorDTO.setNombre(trabajador.getNombre());
+
+        trabajadorDTO.setApellido(trabajador.getApellido());
+
+        trabajadorDTO.setCargo(trabajador.getCargo());
+
+        trabajadorDTO.setTelefono(trabajador.getTelefono());
+
+        trabajadorDTO.setId(trabajador.getId());
+
+        trabajadorDTO.setContador(numeroVentas);
+
+        trabajadorDTO.setComision(comision);
+
+
+        return trabajadorDTO;
     }
 }

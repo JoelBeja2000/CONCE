@@ -123,7 +123,7 @@ export class TrabajadorComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  update(trabajador) {
+  update(trabajador?) {
     const modalRef = this.modalService.open(TrabajadorUpdateComponent, { ariaLabelledBy: 'modal-basic-title' });
     modalRef.result.then(result => {
       alert(result);

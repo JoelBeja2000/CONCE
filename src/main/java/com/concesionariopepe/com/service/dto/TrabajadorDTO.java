@@ -17,21 +17,21 @@ public class TrabajadorDTO {
 
     private int contador;
 
-    private int comision;
+    private double comision;
 
     public int getContador() {
         return contador;
     }
 
     public void setContador(int contador) {
-        this.contador = contador;
+         this.contador = contador;
     }
 
-    public int getComision() {
+    public double getComision() {
         return comision;
     }
 
-    public void setComision(int comision) {
+    public void setComision(double comision) {
         this.comision = comision;
     }
 

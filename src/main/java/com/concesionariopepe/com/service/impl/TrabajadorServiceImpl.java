@@ -2,16 +2,20 @@ package com.concesionariopepe.com.service.impl;
 
 import com.concesionariopepe.com.service.TrabajadorService;
 import com.concesionariopepe.com.service.dto.TrabajadorDTO;
+import com.concesionariopepe.com.service.mapper.TrabajadorMapper;
 import com.concesionariopepe.com.domain.Trabajador;
 import com.concesionariopepe.com.repository.TrabajadorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -49,10 +53,39 @@ public class TrabajadorServiceImpl implements TrabajadorService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<Trabajador> findAll(Pageable pageable) {
+    public Page<TrabajadorDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Trabajadors");
-        return trabajadorRepository.findAll(pageable);
+
+        Page<Trabajador> trabajadorToTrabajadorDto = trabajadorRepository.findAll(pageable);
+
+         List<TrabajadorDTO> trabajadoresDtoLista = new ArrayList<>();
+
+         TrabajadorMapper trabajadorMapper = new TrabajadorMapper();
+         trabajadorToTrabajadorDto.forEach(trabajador -> {
+                  int numeroVentas = trabajadorRepository.getAllCounterSales(trabajador.getId());
+                  double comision = numeroVentas * 1.5;
+                  if(numeroVentas==13 ){comision = 19.5;};
+                  trabajadoresDtoLista.add(trabajadorMapper.toDTO(trabajador, numeroVentas,comision));
+          });
+          return new PageImpl<>(trabajadoresDtoLista, pageable,trabajadorToTrabajadorDto.getSize());
+
     }
+
+    // @Override
+    // @Transactional(readOnly = true)
+    // public Page<TrabajadorDTO> findAll(Pageable pageable) {
+    //     log.debug("Request to get all Trabajadors");
+    //     Page<Trabajador> trabajadores = trabajadorRepository.findAll(pageable);
+
+
+    //     List<TrabajadorDTO> trabajadoresDTO = new ArrayList<>();
+    //     TrabajadorMapper trabajadorMapper = new TrabajadorMapper();
+    //     trabajadores.forEach(trabajador -> {
+    //         Long numeroVentas = trabajadorRepository.getAllCounterSales(trabajador.getId());
+    //         trabajadoresDTO.add(trabajadorMapper.toDTO(trabajador, numeroVentas));
+    //     });
+    //     return new PageImpl<>(trabajadoresDTO, pageable,trabajadores.getSize());
+    // }
 
 
     /**

@@ -27,7 +27,12 @@ export class TrabajadorUpdateComponent implements OnInit {
   constructor(protected trabajadorService: TrabajadorService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.updateForm(this.trabajador);
+    if (this.trabajador) {
+      this.updateForm(this.trabajador);
+    } else {
+      this.trabajador = new Trabajador();
+      this.trabajador.id = undefined;
+    }
   }
 
   updateForm(trabajador: ITrabajador) {
@@ -48,7 +53,7 @@ export class TrabajadorUpdateComponent implements OnInit {
   save() {
     this.isSaving = true;
     const trabajador = this.createFromForm();
-    if (trabajador.id !== undefined) {
+    if (trabajador.id != undefined) {
       this.subscribeToSaveResponse(this.trabajadorService.update(trabajador));
     } else {
       this.subscribeToSaveResponse(this.trabajadorService.create(trabajador));

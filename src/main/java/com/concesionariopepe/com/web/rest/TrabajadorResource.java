@@ -2,6 +2,7 @@ package com.concesionariopepe.com.web.rest;
 
 import com.concesionariopepe.com.domain.Trabajador;
 import com.concesionariopepe.com.service.TrabajadorService;
+import com.concesionariopepe.com.service.dto.TrabajadorDTO;
 import com.concesionariopepe.com.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -92,12 +93,13 @@ public class TrabajadorResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of trabajadors in body.
      */
     @GetMapping("/trabajadors")
-    public ResponseEntity<List<Trabajador>> getAllTrabajadors(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<List<TrabajadorDTO>> getAllTrabajadors(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of Trabajadors");
-        Page<Trabajador> page = trabajadorService.findAll(pageable);
+        Page<TrabajadorDTO> page = trabajadorService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
 
     /**
      * {@code GET  /trabajadors/:id} : get the "id" trabajador.

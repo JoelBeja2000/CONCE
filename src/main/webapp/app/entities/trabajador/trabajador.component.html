@@ -1,7 +1,8 @@
 <div>
     <h2 id="page-heading">
         <span>Trabajadors</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-trabajador" [routerLink]="['/trabajador/new']">
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-trabajador"
+       (click)="update()">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             Create new Trabajador
@@ -20,8 +21,8 @@
             <th jhiSortBy="apellido"><span>Apellido</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="cargo"><span>Cargo</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="telefono"><span>Telefono</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="telefono"><span>NumeroDeVentas</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="telefono"><span>Comision</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="numerodeventas"><span>NumeroDeVentas</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="comision"><span>Comision</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -34,7 +35,7 @@
                 <td>{{trabajador.cargo}}</td>
                 <td>{{trabajador.telefono}}</td>
                 <td>{{trabajador.contador}}</td>
-                <td>{{trabajador.comision}}</td>
+                <td>{{trabajador.comision}}%</td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
