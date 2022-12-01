@@ -1,0 +1,90 @@
+<div>
+    <h2 id="page-heading">
+        <span>Vehiculos</span>
+        <button id="jh-create-entity"
+        class="btn btn-primary float-right jh-create-entity create-vehiculo"
+         [routerLink]="['/vehiculo/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Vehiculo
+            </span>
+        </button>
+
+        <button id="jh-create-entity" class="btn btn-danger float-right jh-create-entity create-vehiculo"
+        (click) = 'getDisponibles()'>
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+                Disponibles
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="vehiculos">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="modelo"><span>Modelo</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="tipo"><span>Tipo</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="precio"><span>Precio</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="matricula"><span>Matricula</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="marca"><span>Marca</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span>EnVenta</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span>Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span>Usado</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let vehiculo of vehiculos ;trackBy: trackId">
+                <td><a [routerLink]="['/vehiculos', vehiculo.id, 'view' ]">{{vehiculo.id}}</a></td>
+                <td>{{vehiculo.modelo}}</td>
+                <td>{{vehiculo.tipo}}</td>
+                <td>{{vehiculo.precio}}</td>
+                <td>{{vehiculo.matricula}}</td>
+                <td>{{vehiculo.marca}}</td>
+                <td>{{vehiculo.venta}}</td>
+                <td>{{vehiculo.date | date:'mediumDate'}}</td>
+                <td>{{vehiculo.usado}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/vehiculo', vehiculo.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+
+
+                        <button type="submit"
+                                class="btn btn-primary btn-sm"
+                                (click) = "update(vehiculo)">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+
+
+                        <button type="submit"
+                                [routerLink]="['/', 'vehiculo', { outlets: { popup: vehiculo.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">delete</span>
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="vehiculos && vehiculos.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
